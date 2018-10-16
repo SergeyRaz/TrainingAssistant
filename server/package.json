@@ -1,0 +1,19 @@
+{
+  "name": "trainingassistant",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "tmp": "0.0.33"
+  },
+  "devDependencies": {
+    "multer": "^1.4.1"
+  }
+}
