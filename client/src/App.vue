@@ -29,13 +29,15 @@ export default {
   color: #212;
   font-family: "Roboto", sans-serif;
 }
+body {
+  background-image: url("./img/white-fabric.png");
+}
 #app {
   display: grid;
   grid-template-rows: 50px 1fr 50px;
   height: 100vh;
-  border-left: 1px solid #eee;
-  border-right: 1px solid #eee;
-  max-width: 1200px;
+  // border-left: 1px solid #eee;
+  // border-right: 1px solid #eee;
   margin: 0 auto;
 }
 </style>

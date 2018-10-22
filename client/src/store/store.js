@@ -17,7 +17,6 @@ export const store = new Vuex.Store({
   },
   mutations: {
     GoToNote(state) {
-      this.state.video.videoObj = document.querySelector(".myVideo");
       this.state.video.videoObj.currentTime = 2500;
       this.state.video.videoObj.play();
       console.log(this.state.video.videoObj);

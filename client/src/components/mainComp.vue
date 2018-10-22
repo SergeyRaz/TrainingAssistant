@@ -4,18 +4,25 @@
       <video class="myVideo" controls value="bcxvbxcv">
         <source src="src/video/vue-6-1.mp4" type="video/mp4">
       </video>
-      <div class="addNote" @click="NotePopupActive">Добавить заметку</div>
+      <div class="addNote" @click="NotePopupActive">Добавить заметку <span class="num">1</span></div>
       <div class="addNotePopup" @click.self="NotePopupActive" :class="{active:active}">
         <form class="addNotePopupForm">
           <input type="text" class="titleNote" v-model="$store.state.video.notes.noteTitle">
           <input type="submit" class="sendNote" @click.prevent="AddNote">
+          <span class="num">2</span>
         </form>
       </div>
     </div>
     <div class="notesContainer">
-      <div class="notesItem" @click="GoToNote">Тест</div>
+      <div class="notesItem" @click="GoToNote">Тест<span class="num">3</span></div>
     </div>
-    <div class="galeryContainer"></div>
+    <div class="galeryContainer">
+      <div class="videoItem">1</div>
+      <div class="videoItem">2</div>
+      <div class="videoItem">3</div>
+      <div class="videoItem">4</div>
+      <div class="videoItem">5</div>
+    </div>
   </section>
 </template>
 <script>
@@ -27,12 +34,13 @@ export default {
     };
   },
   methods: {
-    GoToNote() {
-      this.$store.commit("GoToNote");
-    },
     NotePopupActive() {
       this.active = !this.active;
+      this.$store.state.video.videoObj = document.querySelector(".myVideo");
       this.$store.state.video.videoObj.pause();
+    },
+    GoToNote() {
+      this.$store.commit("GoToNote");
     },
     AddNote() {
       console.log("Создаем заметку и отправляем на сервер");
@@ -46,30 +54,45 @@ export default {
 </script>
 <style lang="scss">
 .mainComp {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+  // border-bottom: 1px solid #eee;
   width: 100%;
   display: grid;
-  grid-template-columns: 650px 1fr;
-  grid-template-rows: 460px 1fr;
+  grid-template-columns: 750px 1fr;
+  grid-template-rows: 570px 1fr;
   grid-gap: 10px;
+  max-width: 1400px;
+  margin: 0 auto;
   .videoContainer,
   .notesContainer,
   .galeryContainer {
-    border: 1px solid darkorange;
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     padding: 10px;
+    border-radius: 5px;
+    .num {
+      background-color: green;
+      padding: 3px 10px;
+      border-radius: 3px;
+      color: #fff;
+      margin: 0px 0px 0px 10px;
+      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.7);
+    }
   }
   .videoContainer {
     .myVideo {
       width: 100%;
     }
     .addNote {
-      border: 1px solid #eee;
-      display: inline-block;
+      user-select: none;
+      border: 1px solid #ddd;
+      display: inline-flex;
+      align-items: center;
       padding: 5px 25px;
+      border-radius: 3px;
       cursor: pointer;
       &:hover {
-        background-color: #eee;
+        background-color: #ddd;
       }
     }
     .addNotePopup {
@@ -100,7 +123,7 @@ export default {
         }
         .sendNote {
           padding: 5px 10px;
-          width: 40%;
+          width: 30%;
         }
       }
     }
@@ -108,17 +131,36 @@ export default {
   .notesContainer {
     .notesItem {
       user-select: none;
-      border: 1px solid #eee;
-      display: inline-block;
+      border: 1px solid #ddd;
+      display: inline-flex;
+      align-items: center;
       padding: 5px 25px;
+      border-radius: 3px;
       cursor: pointer;
       &:hover {
-        background-color: #eee;
+        background-color: #ddd;
       }
     }
   }
   .galeryContainer {
     width: 100%;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-gap: 10px;
+    .videoItem {
+      // border: 1px solid #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 50px;
+      color: #ddd;
+      border-radius: 5px;
+      background-color: #eee;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
   }
 }
 </style>
