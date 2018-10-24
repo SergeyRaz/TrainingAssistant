@@ -7,8 +7,8 @@
 export default {};
 </script>
 <style lang="scss">
+@import "../styles/variables.scss";
 .headerComp {
-  // border-bottom: 1px solid #eee;
   padding: 10px;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.7);

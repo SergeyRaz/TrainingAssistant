@@ -7,6 +7,7 @@
 export default {};
 </script>
 <style lang="scss">
+@import "../styles/variables.scss";
 .footerComp {
   padding: 10px;
   width: 100%;

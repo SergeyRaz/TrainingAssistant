@@ -5,26 +5,26 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
-    video: {
-      videoName: "name",
-      videoTime: "videoTime",
-      videoObj: "",
-      notes: {
-        noteTitle: "",
-        noteTime: null
-      }
+    notes: []
+  },
+  /**********************************************/
+  getters: {
+    notes(state) {
+      return state.notes;
     }
   },
+  /**********************************************/
   mutations: {
-    GoToNote(state) {
-      this.state.video.videoObj.currentTime = 2500;
-      this.state.video.videoObj.play();
-      console.log(this.state.video.videoObj);
-      console.log(this.state.video.videoObj.src);
+    // Создание заметки
+    CreateNote(getters, obj) {
+      getters.notes.push(obj);
     },
-    AddNote(state) {
-      this.state.video.notes.noteTitle = "";
-      console.log("очистили переменную с заголовком заметки");
+    // Удаление заметки
+    DelNotes(getters, noteIndex) {
+      getters.notes.splice(noteIndex, 1);
     }
-  }
+  },
+  strict: true,
+  /**********************************************/
+  actions: {}
 });
