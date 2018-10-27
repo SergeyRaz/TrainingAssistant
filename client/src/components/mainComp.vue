@@ -8,7 +8,7 @@
       <div class="addNotePopup" v-show="active" @click.self="OpenPopupNote">
         <form class="addNotePopupForm">
           <input type="text" class="titleNote" v-model="noteTitle">
-          <input type="submit" class="sendNote" @click.prevent="CreateNote()">
+          <button class="sendNote" @click.prevent="CreateNote()">Создать</button>
           <span class="num">2</span>
         </form>
       </div>
