@@ -27,7 +27,5 @@ export const store = new Vuex.Store({
   },
   strict: true,
   /**********************************************/
-  actions: {
-    upLoadVideo() {}
-  }
+  actions: {}
 });

@@ -22,11 +22,10 @@
       </div>
     </div>
     <div class="galeryContainer">
-      <form method="POST" enctype="multipart/form-data">
+      <form class="addVideo" method="POST" enctype="multipart/form-data">
         <label>
           <span class="btnPlus">+</span>
-          <input class="file" type="file" name="file">
-          <input type="submit" value="Отправить" @click.prevent="uploadFiles">
+          <input class="addVideoInput" type="file" name="file" @change="uploadFiles">
         </label>
       </form>
       <template>
@@ -51,11 +50,9 @@ export default {
   },
   methods: {
     // Загрузка видео на сервер
-    ...mapActions(["upLoadVideo"]),
     uploadFiles() {
       const data = new FormData();
-      var videoFile = document.querySelector(".file");
-      console.log(data);
+      var videoFile = document.querySelector(".addVideoInput");
       data.append("file", videoFile.files[0]);
       axios
         .post("http://localhost:3000/", data, {
@@ -220,27 +217,27 @@ export default {
       min-width: 240px;
       min-height: 200px;
     }
-    // .addVideo {
-    //   label {
-    //     width: 100%;
-    //     height: 100%;
-    //     @extend .center-flex;
-    //     cursor: pointer;
-    //   }
-    //   .btnPlus {
-    //     color: #ddd;
-    //   }
-    //   .addVideoInput {
-    //     display: none;
-    //   }
-    //   &:hover {
-    //     background-color: #ddd;
-    //     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    //     .btnPlus {
-    //       color: #ccc;
-    //     }
-    //   }
-    // }
+    .addVideo {
+      label {
+        width: 100%;
+        height: 100%;
+        @extend .center-flex;
+        cursor: pointer;
+      }
+      .btnPlus {
+        color: #ddd;
+      }
+      .addVideoInput {
+        display: none;
+      }
+      &:hover {
+        background-color: #ddd;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        .btnPlus {
+          color: #ccc;
+        }
+      }
+    }
   }
 }
 </style>
