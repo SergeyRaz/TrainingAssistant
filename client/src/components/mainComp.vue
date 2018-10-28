@@ -22,11 +22,11 @@
       </div>
     </div>
     <div class="galeryContainer">
-      <form action="http://localhost:3000/" method="POST" enctype="multipart/form-data">
+      <form method="POST" enctype="multipart/form-data">
         <label>
           <span class="btnPlus">+</span>
-          <input type="file" name="file">
-          <input type="submit" value="Отправить">
+          <input class="file" type="file" name="file">
+          <input type="submit" value="Отправить" @click.prevent="uploadFiles">
         </label>
       </form>
       <template>
@@ -37,6 +37,7 @@
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
+import axios from "axios";
 export default {
   data() {
     return {
@@ -51,6 +52,24 @@ export default {
   methods: {
     // Загрузка видео на сервер
     ...mapActions(["upLoadVideo"]),
+    uploadFiles() {
+      const data = new FormData();
+      var videoFile = document.querySelector(".file");
+      console.log(data);
+      data.append("file", videoFile.files[0]);
+      axios
+        .post("http://localhost:3000/", data, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error.response);
+        });
+    },
     // Открытие Popup window
     OpenPopupNote() {
       this.active = !this.active;

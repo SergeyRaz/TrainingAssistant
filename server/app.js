@@ -20,8 +20,8 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 // Роутер для загрузки файла
 app.post("/", upload.single("file"), function(req, res, next) {
-  // res.sendStatus(200);
-  res.end();
+  res.sendStatus(200);
+  console.log(req);
 });
 
 app.listen(3000, function() {
