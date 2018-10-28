@@ -22,16 +22,21 @@
       </div>
     </div>
     <div class="galeryContainer">
-      <div class="videoItem">+</div>
-      <div class="videoItem">2</div>
-      <div class="videoItem">3</div>
-      <div class="videoItem">4</div>
-      <div class="videoItem">5</div>
+      <form action="http://localhost:3000/" method="POST" enctype="multipart/form-data">
+        <label>
+          <span class="btnPlus">+</span>
+          <input type="file" name="file">
+          <input type="submit" value="Отправить">
+        </label>
+      </form>
+      <template>
+        <div class="videoItem">2</div>
+      </template>
     </div>
   </section>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -44,6 +49,8 @@ export default {
     ...mapGetters(["notes"])
   },
   methods: {
+    // Загрузка видео на сервер
+    ...mapActions(["upLoadVideo"]),
     // Открытие Popup window
     OpenPopupNote() {
       this.active = !this.active;
@@ -75,7 +82,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "../styles/variables.scss";
+@import "../styles/global_styles.scss";
 .mainComp {
   padding: 10px 0;
   width: 100%;
@@ -168,7 +175,7 @@ export default {
         margin: 0px 0px 0px 7px;
         padding: 3px 7px;
         border-radius: 3px;
-        color: #fff;
+        color: $color-white;
         background-color: darkred;
         box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.7);
       }
@@ -180,19 +187,41 @@ export default {
     grid-column-end: 3;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr;
+    // grid-template-rows: 1fr;
     grid-gap: 10px;
-    .videoItem {
-      // border: 1px solid #ccc;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    .videoItem,
+    .addVideo {
+      @extend .center-flex;
       font-size: 50px;
       color: #ddd;
       border-radius: 5px;
       background-color: #eee;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      min-width: 240px;
+      min-height: 200px;
     }
+    // .addVideo {
+    //   label {
+    //     width: 100%;
+    //     height: 100%;
+    //     @extend .center-flex;
+    //     cursor: pointer;
+    //   }
+    //   .btnPlus {
+    //     color: #ddd;
+    //   }
+    //   .addVideoInput {
+    //     display: none;
+    //   }
+    //   &:hover {
+    //     background-color: #ddd;
+    //     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    //     .btnPlus {
+    //       color: #ccc;
+    //     }
+    //   }
+    // }
   }
 }
 </style>
