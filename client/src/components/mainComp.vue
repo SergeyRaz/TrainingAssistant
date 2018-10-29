@@ -32,7 +32,7 @@
       <template>
         <div class="videoItem" v-for="(value, index, key) in nameFiles.data" :key="key">
           <span>{{value}}</span>
-          <span class="delVideo">✖</span>
+          <span class="delVideo" @click="deleteVideo(value, index)">✖</span>
         </div>
       </template>
     </div>
@@ -51,16 +51,20 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["notes"]),
-    aaa() {
-      return this.nameFiles;
-    }
+    ...mapGetters(["notes"])
   },
   beforeMount() {
     this.displayVideoName();
   },
   methods: {
-    // Тестовый GET запрос на сервер
+    // Удаление видео файла
+    deleteVideo(value, index) {
+      this.nameFiles.data.splice(index, 1);
+      axios.post("http://localhost:3000/deleteVideo", {
+        value
+      });
+    },
+    // Запрос на вывод имен файлов видео
     async displayVideoName() {
       let json = await axios.get("http://localhost:3000/nameFiles");
       this.nameFiles = json;
@@ -71,18 +75,11 @@ export default {
       const data = new FormData();
       var videoFile = document.querySelector(".addVideoInput");
       data.append("file", videoFile.files[0]);
-      axios
-        .post("http://localhost:3000/", data, {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        })
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error.response);
-        });
+      axios.post("http://localhost:3000/", data, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      });
       this.displayVideoName();
     },
     // Открытие Popup window
@@ -110,7 +107,6 @@ export default {
     // Удаляем заметку из массива
     DelNotes(noteIndex) {
       this.$store.commit("DelNotes", noteIndex);
-      console.log(noteIndex);
     }
   }
 };

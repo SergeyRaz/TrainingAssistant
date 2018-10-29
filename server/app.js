@@ -33,7 +33,6 @@ app.use(cors({ origin: "http://localhost:8080" }));
 // Роутер для загрузки файла
 app.post("/", upload.single("file"), function(req, res, next) {
   res.sendStatus(200);
-  res.end;
 });
 
 // Читаем файлы и передаем на клиент
@@ -41,6 +40,13 @@ app.get("/nameFiles", function(req, res) {
   fs.readdir(videoFolder, function(err, files) {
     res.json(files);
   });
+  res.end;
+});
+
+// Удаляем видео файл
+app.post("/deleteVideo", function(req, res) {
+  fs.unlinkSync("../client/src/video/" + req.body.value);
+  res.end;
 });
 
 // Слушаем порт 3000
