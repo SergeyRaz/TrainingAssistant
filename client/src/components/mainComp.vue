@@ -2,9 +2,10 @@
   <section class="mainComp">
     <div class="videoContainer">
       <video class="myVideo" controls value="bcxvbxcv">
-        <source src="src/video/vue-6-1.mp4" type="video/mp4">
+        <source src="src/video/vue-1-1.mp4" type="video/mp4">
       </video>
       <div class="addNote" @click="OpenPopupNote">Добавить заметку <span class="num">1</span></div>
+      <div class="addNote" @click="TEST()">Тестовая кнопка <span class="num">5</span></div>
       <div class="addNotePopup" v-show="active" @click.self="OpenPopupNote">
         <form class="addNotePopupForm">
           <input type="text" class="titleNote" v-model="noteTitle">
@@ -29,7 +30,10 @@
         </label>
       </form>
       <template>
-        <div class="videoItem">2</div>
+        <div class="videoItem" v-for="(value, index, key) in nameFiles.data" :key="key">
+          <span>{{value}}</span>
+          <span class="delVideo">✖</span>
+        </div>
       </template>
     </div>
   </section>
@@ -42,13 +46,26 @@ export default {
     return {
       videoObj: {},
       active: false,
-      noteTitle: ""
+      noteTitle: "",
+      nameFiles: ""
     };
   },
   computed: {
-    ...mapGetters(["notes"])
+    ...mapGetters(["notes"]),
+    aaa() {
+      return this.nameFiles;
+    }
+  },
+  beforeMount() {
+    this.displayVideoName();
   },
   methods: {
+    // Тестовый GET запрос на сервер
+    async displayVideoName() {
+      let json = await axios.get("http://localhost:3000/nameFiles");
+      this.nameFiles = json;
+      return json;
+    },
     // Загрузка видео на сервер
     uploadFiles() {
       const data = new FormData();
@@ -66,6 +83,7 @@ export default {
         .catch(error => {
           console.log(error.response);
         });
+      this.displayVideoName();
     },
     // Открытие Popup window
     OpenPopupNote() {
@@ -115,14 +133,6 @@ export default {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     padding: 10px;
     border-radius: 5px;
-    .num {
-      background-color: green;
-      padding: 3px 10px;
-      border-radius: 3px;
-      color: #fff;
-      margin: 0px 0px 0px 10px;
-      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.7);
-    }
   }
   .videoContainer {
     .myVideo {
@@ -187,14 +197,6 @@ export default {
       &:hover {
         background-color: #ddd;
       }
-      .delNotes {
-        margin: 0px 0px 0px 7px;
-        padding: 3px 7px;
-        border-radius: 3px;
-        color: $color-white;
-        background-color: darkred;
-        box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.7);
-      }
     }
   }
   .galeryContainer {
@@ -203,41 +205,55 @@ export default {
     grid-column-end: 3;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    // grid-template-rows: 1fr;
     grid-gap: 10px;
     .videoItem,
     .addVideo {
+      border: 3px solid green;
       @extend .center-flex;
-      font-size: 50px;
-      color: #ddd;
+      color: #333;
       border-radius: 5px;
       background-color: #eee;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       cursor: pointer;
       min-width: 240px;
       min-height: 200px;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      &:hover {
+        background-color: #ddd;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      }
     }
     .addVideo {
+      font-size: 50px;
       label {
         width: 100%;
         height: 100%;
         @extend .center-flex;
         cursor: pointer;
-      }
-      .btnPlus {
-        color: #ddd;
-      }
-      .addVideoInput {
-        display: none;
-      }
-      &:hover {
-        background-color: #ddd;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        .btnPlus {
-          color: #ccc;
+        .addVideoInput {
+          display: none;
         }
       }
     }
   }
+}
+.num {
+  background-color: green;
+  padding: 3px 10px;
+  border-radius: 3px;
+  color: #fff;
+  margin: 0px 0px 0px 10px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.7);
+}
+.delNotes,
+.delVideo {
+  margin: 0px 0px 0px 7px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  color: $color-white;
+  background-color: darkred;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.7);
 }
 </style>
